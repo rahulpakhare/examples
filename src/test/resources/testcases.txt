@@ -1,0 +1,4 @@
+Tetcase | Status
+1. Use getComponentConfiguration() method to override the storm topology.*
+2. Check ack and fail method when it's being called by printing the soc in it.
+3. Build topology without specifying the spout/bolt parallelism hint.

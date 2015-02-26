@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <Target>System.out</Target>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c %logger{36} :%L{3} - %m%n</pattern>
+    </encoder>
+  </appender>
+  
+<!--  
+    <logger name="com." level="DEBUG"/>
+    <logger name="com." level="WARN"/>
+ -->
+    
+  <root level="WARN">
+    <appender-ref ref="stdout"/>
+  </root>
+</configuration>
