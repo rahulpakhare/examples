@@ -1,4 +1,4 @@
-package util;
+package com.example.storm.util;
 
 /**
  * Created by rahulpa on 2/26/2015.

@@ -11,7 +11,7 @@
 	<dependencySets>
 		<dependencySet>
 			<scope>runtime</scope>
-			<useProjectArtifact>false</useProjectArtifact>
+			<useProjectArtifact>true</useProjectArtifact>
 			<unpack>true</unpack>
 			<unpackOptions>
 				<excludes>

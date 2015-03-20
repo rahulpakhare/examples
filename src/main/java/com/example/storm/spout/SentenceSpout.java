@@ -1,4 +1,4 @@
-package spout;
+package com.example.storm.spout;
 
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -6,9 +6,9 @@ import backtype.storm.topology.IRichSpout;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
+import com.example.storm.util.LogUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.LogUtil;
 
 import java.util.Map;
 import java.util.Random;
@@ -19,16 +19,17 @@ import java.util.Random;
 public class SentenceSpout implements IRichSpout {
 private static final Logger log = LoggerFactory.getLogger(SentenceSpout.class);
 
-    private SpoutOutputCollector collector;
+    protected SpoutOutputCollector collector;
     private String[] sentences;
     private long sleep;
-    private boolean ack;
+    private boolean emmitMessageId;
     private Random random;
     private long counter;
+    protected TopologyContext context;
 
-    public SentenceSpout (long sleep, boolean ack) {
+    public SentenceSpout (long sleep, boolean emmitMessageId) {
         this.sleep = sleep;
-        this.ack = ack;
+        this.emmitMessageId = emmitMessageId;
     }
 
     @Override
@@ -48,8 +49,12 @@ private static final Logger log = LoggerFactory.getLogger(SentenceSpout.class);
 
         this.collector = spoutOutputCollector;
         random = new Random();
+        context = topologyContext;
+        sentences = getInputFeeds();
+    }
 
-        sentences = new String[] {
+    public String[] getInputFeeds() {
+        return new String[] {
                 "ack and Jill went up the hill",
                 "To fetch a pail of water.",
                 "Jack fell down and broke his crown",
@@ -73,11 +78,19 @@ private static final Logger log = LoggerFactory.getLogger(SentenceSpout.class);
 
         String sentence = sentences[random.nextInt(sentences.length)];
 
-        if (ack)
-            collector.emit(new Values(sentence), counter++);
+        if (emmitMessageId)
+            emit(new Values(sentence), counter++);
         else
-            collector.emit(new Values(sentence));
+            emit(new Values(sentence), null);
 
+    }
+
+    public void emit(Values values, Object messageId) {
+        if(messageId == null) {
+            collector.emit(values);
+        } else {
+            collector.emit(values, messageId);
+        }
     }
 
     @Override
