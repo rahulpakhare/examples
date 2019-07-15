@@ -53,7 +53,9 @@
                     <artifactId>commons-codec</artifactId>
                 </exclusion>
             </exclusions>
+<!--
             <scope>provided</scope>
+-->
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
