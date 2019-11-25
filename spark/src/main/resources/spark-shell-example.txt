@@ -1,0 +1,25 @@
+  ________________________________________________
+ example - rate stream example. it prints on console streams of timestamp and long value.
+
+val rateStream = spark.readStream.format("rate").option("rowsPerSecond", 10).option("numPartitions", 5).load()
+
+import org.apache.spark.sql.streaming.{OutputMode, Trigger}
+import scala.concurrent.duration._
+import org.apache.spark.{SparkConf, TaskContext}
+
+val q = rateStream.as[(Long, Long)].mapPartitions(x => {
+  val pid = TaskContext.getPartitionId()
+  x.map(r => {
+    println("r: " + r.toString() + " pid: " + pid)
+    r
+  })
+})
+
+q.writeStream.
+  format("console").
+  option("truncate", false).
+  trigger(Trigger.ProcessingTime(10.seconds)).
+  outputMode(OutputMode.Update).
+  start
+
+  ________________________________________________
