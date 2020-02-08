@@ -1,20 +1,18 @@
 package com.example.storm.topology;
 
-import backtype.storm.Config;
-import backtype.storm.StormSubmitter;
-import backtype.storm.generated.AlreadyAliveException;
-import backtype.storm.generated.InvalidTopologyException;
-import backtype.storm.topology.TopologyBuilder;
 import com.example.storm.bolt.ConsolePrinterBolt;
 import com.example.storm.spout.SentenceSpout;
 import com.example.storm.stream.CustomSentenceStream;
+import org.apache.storm.Config;
+import org.apache.storm.StormSubmitter;
+import org.apache.storm.topology.TopologyBuilder;
 
 /**
  * Created by rahul on 3/3/15.
  */
 public class CustomStreamGroupingTopology {
 
-    public static void main(String args[]) throws AlreadyAliveException, InvalidTopologyException {
+    public static void main(String args[]) throws Exception {
         if(args.length > 1) {
             throw new IllegalArgumentException("Provide Topology name");
         }

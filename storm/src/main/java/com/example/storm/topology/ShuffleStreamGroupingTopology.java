@@ -1,21 +1,20 @@
 package com.example.storm.topology;
 
-import backtype.storm.Config;
-import backtype.storm.StormSubmitter;
-import backtype.storm.generated.AlreadyAliveException;
-import backtype.storm.generated.InvalidTopologyException;
-import backtype.storm.generated.StormTopology;
-import backtype.storm.topology.TopologyBuilder;
+
 import com.example.storm.bolt.ConsolePrinterBolt;
 import com.example.storm.spout.SentenceSpout;
 import com.example.storm.spout.SentenceSpoutWithStreamId;
+import org.apache.storm.Config;
+import org.apache.storm.StormSubmitter;
+import org.apache.storm.generated.StormTopology;
+import org.apache.storm.topology.TopologyBuilder;
 
 /**
  * Created by rahul on 3/2/15.
  */
 public class ShuffleStreamGroupingTopology {
 
-    public static void main(String args[]) throws AlreadyAliveException, InvalidTopologyException {
+    public static void main(String args[]) throws Exception {
         if(args.length != 2) {
             throw new IllegalArgumentException("Topology name and Second argument true/false required. true means ShuffleGrouping with stream id will be used. false means ShuffleGrouping with default stream will be used.");
         }
