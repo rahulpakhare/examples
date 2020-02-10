@@ -17,6 +17,7 @@
         <module>spark</module>
         <module>storm</module>
         <module>java</module>
+        <module>Int</module>
     </modules>
     <build>
         <plugins>
